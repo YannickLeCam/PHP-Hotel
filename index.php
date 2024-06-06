@@ -18,24 +18,26 @@ require_once './class/Reservation.php';
 </head>
 <body>
     <?php
-    $hotel1 = new Hotel("Hilton",4,"Paris","5 rue de l'étoile");
+    $hotel1 = new Hotel("Hilton",4,"Paris","5 rue de l'étoile,67000,STRASBOURG");
+    $hotel2 = new Hotel("Baltazar",5,"Rennes","14 rue de fougère,35700,RENNES");
 
     $c1= new Chambre("Chambre 1", 2 , 99.99,true,$hotel1);
     $c2= new Chambre("Chambre 2", 4 , 220,true,$hotel1);
-    $c3 = new Chambre("Chembre 3", 2 , 120 , false, $hotel1);
+    $c3 = new Chambre("Chambre 3", 2 , 120 , false, $hotel1);
+
+    $c4=new Chambre("Chambre 1", 4 , 1200 , true, $hotel2);
 
     $cli1 = new Client("Murmann","Mickaël" );
 
-    $res = new Reservation($c1,$cli1,"2024-06-06","2024-06-07");
-    $res1 = new Reservation($c2,$cli1,"2024-06-06","2024-06-07");
+    $res = new Reservation($c1,$cli1,"2024-06-06","2024-06-15");
+    $res1 = new Reservation($c2,$cli1,"2024-06-06","2024-06-11");
 
     echo $hotel1->printChambreStatuts();
+    echo $hotel2->printChambreStatuts();
     echo $hotel1->printInfo();
     echo $hotel1->printResa();
-
-
-    var_dump($hotel1);
-
+    echo $hotel2->printResa();
+    echo $cli1->printResa();
 
     ?>
 </body>

@@ -119,6 +119,10 @@ class Reservation {
         $this->chambre = $chambre;
         return $this;
     }
+    public function nbNuit():int {
+        return $this->dateArrivee->diff($this->dateDepart)->days;
+        
+    }
 
     public function __toString()
     {

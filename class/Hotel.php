@@ -180,10 +180,15 @@ HTML;
     }
     public function printResa(){
         $retour = "<h2> Reservations de $this </h2>";
-        $retour .= '<p class="dispo">'. $this->countAllResa() .' Réservations </p>';
-        foreach ($this->chambres as $chambre) {
-            foreach ($chambre->getReservations() as $reservation) {
-                $retour .= "<p>$reservation</p>";
+        $nbResaTotal = $this->countAllResa();
+        if ($nbResaTotal==0) {
+            $retour.= "<p>Aucune réservation !</p>";
+        }else {
+            $retour .= '<p class="dispo">'. $nbResaTotal .' Réservations </p>';
+            foreach ($this->chambres as $chambre) {
+                foreach ($chambre->getReservations() as $reservation) {
+                    $retour .= "<p>$reservation</p>";
+                }
             }
         }
         return $retour;
