@@ -32,13 +32,31 @@ require_once './class/Reservation.php';
     $res = new Reservation($c1,$cli1,"2024-06-06","2024-06-15");
     $res1 = new Reservation($c2,$cli1,"2024-06-06","2024-06-11");
 
+    /*
     echo $hotel1->printChambreStatuts();
     echo $hotel2->printChambreStatuts();
     echo $hotel1->printInfo();
     echo $hotel1->printResa();
     echo $hotel2->printResa();
     echo $cli1->printResa();
-
+    */
+    ?>
+    <form action="" method="get">
+        <label for="">Entrez l'hotel voulue</label>
+        <select name="hotel" id="">
+            <option value=<?=$hotel1?>><?=$hotel1?></option>
+            <option value=<?=$hotel2?>><?=$hotel2?></option>
+        </select>
+        <label for="">Entrez le début du séjour</label>
+        <input type="datetime-local" name="dateArrivee" id="">
+        <label for="">Entrez la fin du séjour</label>
+        <input type="datetime-local" name="dateDepart" id="">
+        <button type="submit">Tester</button>
+    </form>
+    <?php
+        if (isset($_GET['dateArrivee']) && isset($_GET['dateDepart'])) {
+            echo $hotel1->printChambreStatuts($_GET['dateArrivee'],$_GET['dateDepart']);
+        }
     ?>
 </body>
 </html>

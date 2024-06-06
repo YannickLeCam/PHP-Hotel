@@ -119,6 +119,15 @@ class Reservation {
         $this->chambre = $chambre;
         return $this;
     }
+
+    public function isDateBetweenDates(DateTime $date, DateTime $startPeriod = null, DateTime $endPeriod=null):bool {
+        if ($startPeriod==null) {
+            $startPeriod=$this->dateArrivee;
+            $endPeriod=$this->dateDepart;
+        }
+        return $date > $startPeriod && $date < $endPeriod;
+    }
+
     public function nbNuit():int {
         return $this->dateArrivee->diff($this->dateDepart)->days;
         
