@@ -17,6 +17,7 @@ require_once 'Reservation.php';
         
         private Hotel $hotel;
 
+        private array $reservations=[];
 
         
         /**
@@ -135,6 +136,16 @@ require_once 'Reservation.php';
                 return $this;
         }
 
+                /**
+         * Get the value of reservations
+         *
+         * @return array[Reservation]
+         */
+        public function getReservations(): array
+        {
+                return $this->reservations;
+        }
+
         /**
          * Get the value of nomChambre
          *
@@ -159,9 +170,40 @@ require_once 'Reservation.php';
                 return $this;
         }
 
+        public function estDispo(DateTime $date){
+                foreach ($this->reservations as $reservation) {
+                        $dateArriverDiff = $date->diff($reservation->getDateArrivee())->invert;
+                        $dateDepartDiff = $date->diff($reservation->getDateDepart())->invert;
+                        if (($dateArriverDiff == 1 && $dateDepartDiff==0 )|| ($dateArriverDiff == 0 && $dateDepartDiff==1)) {
+                                return false;
+                        }
+                }
+                return true;
+        }
+
+        public function dateDisponible( DateTime $dA , DateTime $dD):bool {
+                
+                return true;
+        }
+
+        //verification si il n'y a pas deja une reservation au date de la reservation !!!!!
+        public function addReservation(Reservation $reservation){
+                if ($this->dateDisponible($reservation->getDateArrivee(),$reservation->getDateDepart())) {
+                        $this->reservations[] = $reservation;
+                }
+                else {
+                        throw new Exception("Chambre indisponnible du " .$reservation->getDateArrivee()." au " . $reservation->getDateDepart() , 1);
+                }
+        }
+
+        public function printTabHtml():string{
+                return "<th scope=\"row\">$this->nomChambre</th><td>$this->prix</td><td>".(($this->wifi) ? '<i class="fa-solid fa-wifi"></i>' : '<i class="fa-solid fa-xmark"></i>')."</td><td>".(($this->estDispo(new DateTime()))?'<span class="dispo">Disponible</span>' : '<span class="reserve">Reservée</span>')."</td>";
+        }
         public function __toString(){
             return "$this->nomChambre ($this->nbLit lit".($this->nbLit>1 ? ("s") : ("")) . " - $this->prix € - WiFi : ". ($this->wifi ? ("Oui") : ("Non")) . " )" ;
         }
+
+
 
     }
 

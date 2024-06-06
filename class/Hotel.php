@@ -148,6 +148,56 @@ class Hotel{
         $this->chambres[] = $chambre; 
     }
 
+    public function countChambreDisp(DateTime $date):int{
+        $counter=0;
+        foreach ($this->chambres as $chambre) {
+            if ($chambre->estDispo($date)) {
+                $counter++;
+            }
+        }
+        return $counter;
+    }
+/*<?=$nbChambreRes>1 ? "s" : "" ?>*/
+    public function printInfo(){
+        $nbChambresTotal = count($this->chambres);
+        $nbChambreDispo = $this->countChambreDisp(new DateTime());
+        $nbChambreRes = $nbChambresTotal-$nbChambreDispo;
+        return <<<HTML
+        <h2>$this</h2>
+        <p>$this->adresse <br>
+        Nombre de chambres : $nbChambresTotal <br>
+        Nombre de chambres réservées : $nbChambreRes <br>
+        Nombre de chambres disponibles : $nbChambreDispo</p>
+HTML; 
+    }
+
+    public function countAllResa():int{
+        $counter=0;
+        foreach ($this->chambres as $chambre) {
+            $counter += count($chambre->getReservation());
+        }
+        return $counter;
+    }
+    public function printResa(){
+        $retour = "<h2> Reservations de $this </h2>";
+        $retour .= '<p class="dispo">'. $this->countAllResa() .'Réservations </p>';
+        foreach ($this->chambres as $chambre) {
+            foreach ($chambre->getReservations() as $reservation) {
+                $retour .= "<p>$reservation</p>";
+            }
+        }
+    }
+
+    public function printChambreStatuts ():string{
+        $retour = "<p>Statuts des chambres de <strong> $this </strong></p>";
+        $retour .= '<table class="table"><thead><tr> <th scope="col">Chambre</th><th scope="col">Prix</th><th scope="col">WiFi</th><th scope="col">Etat</th></tr></thead> <tbody>';
+        foreach ($this->chambres as $chambre) {
+            $retour.= "<tr>". $chambre->printTabHtml()."</tr>";
+        }
+        $retour .= "</tbody></table>";
+        return $retour;
+    }
+
     public function __toString(){
         return "$this->nomHotel " . $this->strEtoiles() . " $this->ville";
     }
