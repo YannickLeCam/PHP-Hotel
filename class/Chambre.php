@@ -209,9 +209,6 @@ require_once 'Reservation.php';
         public function __toString(){
             return "$this->nomChambre ($this->nbLit lit".($this->nbLit>1 ? ("s") : ("")) . " - $this->prix € - WiFi : ". ($this->wifi ? ("Oui") : ("Non")) . " )" ;
         }
-
-
-
     }
 
 
