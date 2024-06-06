@@ -174,18 +174,19 @@ HTML;
     public function countAllResa():int{
         $counter=0;
         foreach ($this->chambres as $chambre) {
-            $counter += count($chambre->getReservation());
+            $counter += count($chambre->getReservations());
         }
         return $counter;
     }
     public function printResa(){
         $retour = "<h2> Reservations de $this </h2>";
-        $retour .= '<p class="dispo">'. $this->countAllResa() .'Réservations </p>';
+        $retour .= '<p class="dispo">'. $this->countAllResa() .' Réservations </p>';
         foreach ($this->chambres as $chambre) {
             foreach ($chambre->getReservations() as $reservation) {
                 $retour .= "<p>$reservation</p>";
             }
         }
+        return $retour;
     }
 
     public function printChambreStatuts ():string{

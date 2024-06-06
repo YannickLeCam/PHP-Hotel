@@ -122,7 +122,7 @@ class Reservation {
 
     public function __toString()
     {
-        return "$this->client - " . $this->chambre->getNomChambre() . " - du " . $this->dateArrivee . " au " . $this->dateDepart . ".";
+        return "$this->client - " . $this->chambre->getNomChambre() . " - du " . $this->dateArrivee->format("d/m/Y") . " au " . $this->dateDepart->format("d/m/Y") . ".";
     }
 }
 

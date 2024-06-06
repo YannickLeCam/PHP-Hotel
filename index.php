@@ -31,6 +31,7 @@ require_once './class/Reservation.php';
 
     echo $hotel1->printChambreStatuts();
     echo $hotel1->printInfo();
+    echo $hotel1->printResa();
 
 
     var_dump($hotel1);
