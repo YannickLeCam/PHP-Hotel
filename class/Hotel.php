@@ -1,7 +1,7 @@
 <?php 
-require_once '/Chambre.php';
-require_once '/Client.php';
-require_once '/Reservation.php';
+require_once 'Chambre.php';
+require_once 'Client.php';
+require_once 'Reservation.php';
 
 
 class Hotel{
@@ -15,10 +15,19 @@ class Hotel{
     private string $adresse;
 
     private array $chambres=[];
-
+    
+    /**
+     * __construct
+     *
+     * @param  string $nomHotel
+     * @param  int $nbEtoile
+     * @param  string $ville
+     * @param  string $adresse
+     * @return void
+     */
     public function __construct(string $nomHotel,int $nbEtoile,string $ville,string $adresse) {
         $this->nomHotel=$nomHotel;
-        $this->$nbEtoile=$nbEtoile;
+        $this->nbEtoile=$nbEtoile;
         $this->ville=$ville;
         $this->adresse = $adresse;
     }
@@ -133,6 +142,10 @@ class Hotel{
     public function getChambres(): array
     {
         return $this->chambres;
+    }
+
+    public function addChambre(Chambre $chambre):void {
+        $this->chambres[] = $chambre; 
     }
 
     public function __toString(){

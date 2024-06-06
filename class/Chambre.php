@@ -1,7 +1,7 @@
 <?php 
-require_once '/Client.php';
-require_once '/Hotel.php';
-require_once '/Reservation.php';
+require_once 'Client.php';
+require_once 'Hotel.php';
+require_once 'Reservation.php';
 ?>
 
 <?php
@@ -18,7 +18,17 @@ require_once '/Reservation.php';
         private Hotel $hotel;
 
 
-
+        
+        /**
+         * __construct
+         *
+         * @param  string $nomChambre
+         * @param  string $nbLit
+         * @param  float $prix
+         * @param  bool $wifi
+         * @param  Hotel $hotel
+         * @return void
+         */
         function __construct(string $nomChambre,int $nbLit,float $prix,bool $wifi,Hotel $hotel) {
             $this->nomChambre = $nomChambre;
             $this->nbLit = $nbLit;
