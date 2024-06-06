@@ -194,11 +194,13 @@ HTML;
         return $retour;
     }
 
-    public function printChambreStatuts ():string{
-        $retour = "<p>Statuts des chambres de <strong> $this </strong></p>";
-        $retour .= '<table class="table"><thead><tr> <th scope="col">Chambre</th><th scope="col">Prix</th><th scope="col">WiFi</th><th scope="col">Etat</th></tr></thead> <tbody>';
+    public function printChambreStatuts (string $dateArrivee , string $dateDepart):string{
+        $dateStart= new DateTime($dateArrivee);
+        $dateEnd = new DateTime($dateDepart);
+        $retour = "<p>Statuts des chambres de <strong> $this </strong> durant la periode ".$dateStart->format("d-m-Y")." au ".$dateEnd->format("d-m-Y")." </p>";
+        $retour .= '<table class="table"><thead><tr> <th scope="col">Chambres</th><th scope="col">Prix</th><th scope="col">WiFi</th><th scope="col">Etat</th></tr></thead> <tbody>';
         foreach ($this->chambres as $chambre) {
-            $retour.= "<tr>". $chambre->printTabHtml()."</tr>";
+            $retour.= "<tr>". $chambre->printTabHtml($dateStart,$dateEnd)."</tr>";
         }
         $retour .= "</tbody></table>";
         return $retour;

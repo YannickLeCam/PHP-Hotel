@@ -181,8 +181,15 @@ require_once 'Reservation.php';
                 return true;
         }
 
+        
+
         public function dateDisponible( DateTime $dA , DateTime $dD):bool {
-                
+                foreach ($this->reservations as $reservation) {
+
+                        if ($reservation->isDateBetweenDates($dA)||$reservation->isDateBetweenDates($dD)||$reservation->isDateBetweenDates($reservation->getDateArrivee(),$dA,$dD)) {
+                                return false;
+                        }
+                }
                 return true;
         }
 
@@ -196,8 +203,8 @@ require_once 'Reservation.php';
                 }
         }
 
-        public function printTabHtml():string{
-                return "<th scope=\"row\">$this->nomChambre</th><td>$this->prix</td><td>".(($this->wifi) ? '<i class="fa-solid fa-wifi"></i>' : '<i class="fa-solid fa-xmark"></i>')."</td><td>".(($this->estDispo(new DateTime()))?'<span class="dispo">Disponible</span>' : '<span class="reserve">Reservée</span>')."</td>";
+        public function printTabHtml(DateTime $dateArrivee , DateTime $dateDepart):string{
+                return "<th scope=\"row\">$this->nomChambre</th><td>$this->prix €</td><td>".(($this->wifi) ? '<i class="fa-solid fa-wifi"></i>' : '<i class="fa-solid fa-xmark"></i>')."</td><td>".(($this->dateDisponible($dateArrivee,$dateDepart))?'<span class="dispo">Disponible</span>' : '<span class="reserve">Reservée</span>')."</td>";
         }
         public function __toString(){
             return "$this->nomChambre ($this->nbLit lit".($this->nbLit>1 ? ("s") : ("")) . " - $this->prix € - WiFi : ". ($this->wifi ? ("Oui") : ("Non")) . " )" ;
